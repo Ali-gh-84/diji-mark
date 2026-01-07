@@ -1,0 +1,29 @@
+.otp-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    direction: ltr;
+}
+
+.otp-input {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #ccc !important;
+    border-radius: 8px !important;
+    background-color: #fff;
+    caret-color: #1976d2;
+    transition: all 0.2s ease;
+}
+
+.otp-input:focus {
+    outline: none;
+    border-color: #1976d2 !important;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+}
+
+.otp-input:not(:empty) {
+    border-color: #1976d2 !important;
+}
