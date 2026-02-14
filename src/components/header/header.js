@@ -1,9 +1,11 @@
 import {useState, useRef, useEffect} from 'react';
+import logo from '../../assets/images/logo.svg';
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
-    const pages = ["درباره ما", "سوالات متداول", "خرید اشتراک", "خانه"];
     const sidebarRef = useRef(null);
+
+    const pages = ['درباره ما', 'سوالات متداول', 'خرید اشتراک', 'خانه'];
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -17,65 +19,126 @@ function Header() {
         };
 
         if (isOpen) {
+            document.body.style.overflow = 'hidden';
             document.addEventListener('mousedown', handleClickOutside);
         } else {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.body.style.overflow = '';
         }
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            document.body.style.overflow = '';
         };
     }, [isOpen]);
 
     return (
         <>
-            <div className="hidden md:flex bg-blue-900 h-2/5 rounded-2xl mx-3 mt-4 p-3 justify-between items-center">
-                <div className="text-center">
-                    <button className="bg-white h-10 rounded-lg p-4 text-black flex items-center">
-                        ورود یا ثبت نام
+            <div
+                className="hidden md:flex bg-blue-900 rounded-2xl mx-3 mt-4 p-4 justify-between items-center shadow-md">
+                <div>
+                    <button
+                        className="bg-white hover:bg-gray-100 transition text-black font-medium px-6 py-2.5 rounded-lg shadow">
+                        ورود یا ثبت‌نام
                     </button>
                 </div>
-                <div className="flex justify-center items-center">
-                    <div className="pages flex justify-center items-center transition-all">
-                        {pages.map((page, index) => (
-                            <ul key={index} className="pe-8">
-                                <li className="page-item text-white hover:border-b-2">{page}</li>
-                            </ul>
-                        ))}
-                    </div>
+
+                <div className="flex items-center gap-10">
+                    {pages.map((page, index) => (
+                        <a
+                            key={index}
+                            href="#"
+                            className="text-white font-medium hover:text-blue-200 transition border-b-2 border-transparent hover:border-blue-300 pb-1"
+                        >
+                            {page}
+                        </a>
+                    ))}
                 </div>
-                <div className="text-center">
-                    <img src="../../assets/images/logo.svg" alt="Logo"/>
+
+                <div>
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        className="h-12 w-auto"
+                    />
                 </div>
             </div>
 
-            <div className="flex md:hidden bg-blue-900 h-2/5 rounded-2xl mx-3 mt-4 p-4 justify-between items-center">
-                <button className="bg-white h-10 rounded-lg p-4 text-black flex items-center">
-                    ورود یا ثبت نام
+            <div
+                className="flex md:hidden bg-blue-900 rounded-2xl mx-3 mt-4 p-4 justify-between items-center shadow-md">
+                <button
+                    className="bg-white hover:bg-gray-100 transition text-black font-medium px-5 py-2.5 rounded-lg shadow">
+                    ورود یا ثبت‌نام
                 </button>
-                <button onClick={toggleMenu} className="text-white">
-                    <img alt="svgImg"
-                         src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRkZGRkZGIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciICB2aWV3Qm94PSIwIDAgMzAgMzAiIHdpZHRoPSIzMHB4IiBoZWlnaHQ9IjMwcHgiPjxwYXRoIGQ9Ik0gMyA3IEEgMS4wMDAxIDEuMDAwMSAwIDEgMCAzIDkgTCAyNyA5IEEgMS4wMDAxIDEuMDAwMSAwIDEgMCAyNyA3IEwgMyA3IHogTSAzIDE0IEEgMS4wMDAxIDEuMDAwMSAwIDEgMCAzIDE2IEwgMjcgMTYgQSAxLjAwMDEgMS4wMDAxIDAgMSAwIDI3IDE0IEwgMyAxNCB6IE0gMyAyMSBBIDEuMDAwMSAxLjAwMDEgMCAxIDAgMyAyMyBMIDI3IDIzIEEgMS4wMDAxIDEuMDAwMSAwIDEgMCAyNyAyMSBMIDMgMjEgeiIvPjwvc3ZnPg=="/>
+
+                <button onClick={toggleMenu} className="text-white focus:outline-none">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4 6h16M4 12h16M4 18h16"
+                        />
+                    </svg>
                 </button>
             </div>
 
             {isOpen && (
-                <aside
-                    ref={sidebarRef}
-                    className="fixed top-0 right-0 w-80 h-5/6 bg-black p-4 m-3 rounded-2xl transition-transform transform translate-x-0">
-                    <img src="../../assets/images/logo.svg" alt="Logo" className="mb-4"/>
-                    <ul className="font-medium text-end">
-                        {pages.map((page, index) => (
-                            <li key={index}>
-                                <a
-                                    href="#"
-                                    className="flex items-center px-2 py-1.5 text-white rounded-base hover:bg-blue-500">
-                                    {page}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </aside>
+                <>
+                    <div
+                        className="fixed inset-0 bg-black/60 z-40 md:hidden"
+                        onClick={() => setIsOpen(false)}
+                    />
+
+                    <aside
+                        ref={sidebarRef}
+                        className={`
+              fixed top-0 right-0 z-50
+              h-screen w-4/5 max-w-xs
+              bg-white text-black
+              shadow-2xl
+              text-right
+              transition-transform duration-800 ease-in-out
+              ${isOpen ? 'translate-x-0' : 'translate-x-full'}
+              md:hidden
+            `}
+                    >
+                        <div className="flex items-center justify-between p-5 border-b border-gray-800">
+                            <img
+                                src={logo}
+                                alt="Logo"
+                                className="h-10 w-auto"
+                            />
+                            <button
+                                onClick={toggleMenu}
+                                className="text-black text-3xl font-light hover:text-gray-300 focus:outline-none"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <nav className="p-5">
+                            <ul className="space-y-2">
+                                {pages.map((page, index) => (
+                                    <li key={index}>
+                                        <a
+                                            href="#"
+                                            className="block px-4 py-3 rounded-lg hover:bg-blue-800/30 transition-colors text-lg"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            {page}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    </aside>
+                </>
             )}
         </>
     );
